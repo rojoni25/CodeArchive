@@ -1,0 +1,140 @@
+"ID";"User";"CodeName";"DescriptiveName";"Description";"language";"Code";"File";"Date"
+"1";"rojoni25";"2digit alter";"2digit alter";"asdfas";"c";"#include <stdio.h>
+#include <math.h>
+void main()
+{
+    int x,y,z,a,p;
+        printf(""Inter two digit number:"");
+        scanf(""%d"",&x);
+y=x/10;
+z=x%10;
+
+printf(""%d%d"",z,y);
+}
+
+";"Uploads/rojoni25//661627622.c";"Fri Apr 06, 2018 12:05:47 AM "
+"2";"rojoni25";"Lowercase To Uppercase using assembly language";"Convert Lowercase letters To Uppercase using assembly language";"Convert Lowercase letters To Uppercase using assembly language";"asm";".MODEL SMALL
+.STACK 100H
+.DATA
+MSG1 DB 'Input-1: $' 
+MSG2 DB 0DH,0AH,'Input-2: $' 
+MSG3 DB 0DH,0AH,'RESULT:$' 
+.CODE
+MAIN PROC
+MOV AX,@DATA
+MOV DS,AX
+LEA DX,MSG1
+MOV AH,9
+INT 21H
+
+MOV AH,1
+INT 21H
+MOV BL,AL 
+AND BL,0DFH
+
+
+LEA DX,MSG3
+MOV AH,9
+INT 21H
+MOV AH,2
+MOV DL,BL
+INT 21H
+
+MOV AH,4CH
+INT 21H
+
+
+MAIN ENDP
+END MAIN";"Uploads/rojoni25//2036001483.asm";"Fri Apr 06, 2018 12:13:10 AM "
+"3";"rojoni25";"Bank Interest";"A java program to calculate Bank Interest";"A java program to calculate Bank Interest";"java";"/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bank_interest;
+
+import java.util.Scanner;
+
+class BangladeshBank
+{
+   static String ClientName;
+   static double Balance ;
+    
+    
+    void showRateofInterest(String name,double amount)
+    {
+        
+        ClientName=name;
+        Balance=amount;
+        double interest=0.10, cal;
+        System.out.println(ClientName);
+        System.out.println(Balance);
+        
+       cal=Balance*interest;
+       cal=Balance+cal;
+       System.out.println(""Amount including interest in Bangladesh Bank = ""+ cal);
+    }
+}
+ class IslamicBank extends BangladeshBank
+ {
+        @Override
+        void showRateofInterest(String name,double amount)
+        {
+             ClientName=name;
+             Balance=amount;
+            double interest=0.15, cal;
+        
+       cal=Balance*interest;
+       cal=Balance+cal;
+       super.showRateofInterest(name,amount);
+       System.out.println(""Amount including interest in Islamic Bank = ""+ cal);
+       
+        }
+                
+ }
+ 
+ class DuchBanglaBank extends BangladeshBank
+ {
+     @Override
+        void showRateofInterest(String name,double amount)
+        {
+             ClientName=name;
+             Balance=amount;
+            double interest=0.20, cal;
+        
+       cal=Balance*interest;
+       cal=Balance+cal;
+       super.showRateofInterest(name,amount);
+       System.out.println(""Amount including interest in Duch Bangla Bank = ""+ cal);
+       
+        }
+ }
+
+public class Bank_Interest {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+       String Name;
+       double amount;      
+        IslamicBank ob1=new IslamicBank();        
+        DuchBanglaBank ob2=new DuchBanglaBank();
+        Scanner scn=new Scanner(System.in);
+        Name=scn.nextLine();
+        amount=scn.nextDouble();
+        ob1.showRateofInterest(Name,amount);
+        ob2.showRateofInterest(Name,amount);
+    }
+    
+}
+";"Uploads/rojoni25//1363156446.java";"Sat Apr 07, 2018 08:12:53 PM "
+"ID";"ProblemId";"Email";"Title";"Description";"Language";"Code";"File";"Date"
+"1";"1932967299";"rojoni25@gmail.com";"Need a C program to calculate the factorial of N";"Need a C program to calculate the factorial of N";"c";NULL;NULL;"Sat Apr 14, 2018 03:29:41 AM "
+"ID";"FirstName";"LastName";"DisplayName";"Email";"Filepath";"Password"
+"4";"Abul";"Hasanat";"Khokon1";"abulkhokon@gmail.com";"Uploads/Khokon1/";"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"
+"2";"Sakhawat";"Hossin";"boyhood";"boyhoodbulbul@gmail.com";"Uploads/boyhood/";"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"
+"1";"Mofakhkherul";"Islam";"rojoni25";"rojoni25@gmail.com";"Uploads/rojoni25/";"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"
+"3";"Solaiman";"Hossain";"rocky25";"shrocky25@gmail.com";"Uploads/rocky25/";"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"
+"ArticleName";"ArticleTitle";"TimeDate";"Article"
