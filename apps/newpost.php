@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://localhost/codearchive/js/jquery-3.3.1.min.js"></script>
+    <script src="http://localhost/codearchive/js/popper.js"></script>
+
+    <script src="http://localhost/codearchive/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://localhost/codearchive/bootstrap-4.0.0-dist/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost/codearchive/css/extracss.css" type="text/css" />
 	
 	<script>
 		
@@ -16,12 +24,12 @@ document.getElementById('Upload').accept = x ;
 	</script>
 
 
-	<title>Submit a solution</title>
+	<title>Post something new</title>
 </head>
 <body>
 	<div class="col-xs-12 col-sm-12 col-md-12 container" style="margin-bottom: 10%;">
 		<form role="form" action="http://localhost/codearchive/#file" method="post" enctype="multipart/form-data">
-			<h2>Submit a solution</h2>
+			<h2>Post here</h2>
 			<hr class="colorgraph">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12">

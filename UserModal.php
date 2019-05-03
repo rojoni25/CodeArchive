@@ -15,12 +15,13 @@
 					</div>
 					<div class='modal-body'>
 						<div class='row '>
-							<div class='col-xs-12 col-sm-8 col-md-6 container'>
+							<div class='col-xs-12 col-sm-6 col-md-8 container'>
 								<form role='form' action='http://localhost/codearchive/logout.php' method='post'>
-									<h2>Logout</h2>
+									<h2>Your Info</h2>
 									<hr class='colorgraph'>
 									<h4><b>Name: $Fname $Lname</b></h4>
 									<h4><b>User Name: $Dname</b></h4>
+									<h4><b>Registered as: $role</b></h4>
 									<h4><b>Email: $Email</b></h4>
 
 									<hr class='colorgraph'>

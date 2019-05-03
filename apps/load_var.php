@@ -4,7 +4,8 @@ if (isset($_POST['login'])||isset($_SESSION['caemail'])) {
 
         $E_mail = $_POST['email'];
         $Password = sha1($_POST['password']);
-    } elseif (isset($_SESSION['caemail'])) {
+    } 
+    elseif (isset($_SESSION['caemail'])) {
 
 
         $E_mail = $_SESSION['caemail'];
@@ -15,7 +16,8 @@ if (isset($_POST['login'])||isset($_SESSION['caemail'])) {
     $result = mysqli_query($con, $sql);
     if (!$var = mysqli_fetch_array($result)) {
         echo "No user found";
-    } else {
+    } 
+    else {
         if (isset($_SESSION['id']))
             $_SESSION['id'] = $_SESSION['id'];
         $_SESSION['caemail'] = $E_mail;

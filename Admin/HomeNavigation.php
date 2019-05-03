@@ -47,30 +47,7 @@
                         Codes
                     </a>
                     <ul class="dropdown-menu bg-dark navbar-dark">
-                        <li class="btn nav-item d-flex justify-content-between align-items-center" onclick=" clrpost(); document.getElementById('postbyC').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=C" onclick=" clrpost(); document.getElementById('postbyC').style.display='block';">C</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('C');?></span>
-				</li>
-				<li class="btn nav-item d-flex justify-content-between align-items-center" onclick=" clrpost(); document.getElementById('postbyCpp').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=CPP" onclick=" clrpost(); document.getElementById('postbyCpp').style.display='block';">C++</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('CPP');?></span>
-				</li>
-				<li class="btn nav-item d-flex justify-content-between align-items-center" onclick=" clrpost(); document.getElementById('postbyJava').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=Java" onclick=" clrpost(); document.getElementById('postbyJava').style.display='block';">Java</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('Java');?></span>
-				</li>
-				<li class="btn nav-item d-flex justify-content-between align-items-center" onclick=" clrpost(); document.getElementById('postbyPy').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=Py" onclick=" clrpost(); document.getElementById('postbyPy').style.display='block';">Python</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('Py');?></span>
-				</li>
-				<li class="btn nav-item d-flex justify-content-between align-items-center" onclick=" clrpost();document.getElementById('postbyPhp').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=PHP" onclick=" clrpost();document.getElementById('postbyPhp').style.display='block';">PHP</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('PHP');?></span>
-				</li>
-				<li class="btn nav-item d-flex justify-content-between align-items-center" onclick="  clrpost(); document.getElementById('postbyAsm').style.display='block';">
-					<a class="linkcolor btn" href="http://localhost/codearchive/posts/category/?cat=Asm" onclick="  clrpost(); document.getElementById('postbyAsm').style.display='block';">Assembly</a>
-					<span class="badge badge-primary badge-pill"><?php countbycat('Asm');?></span>
-				</li>
+                        
                     </ul>
                 </li>
 
@@ -84,9 +61,9 @@
 
                     
 <?php 
-if (isset($_SESSION['caemail'])|| isset($_POST['login'])){echo '
+if (isset($_SESSION['caadminemail'])|| isset($_POST['adminlogin'])){echo '
 				<li class="nav-item">
-					<a class="linkcolor btn" href="#" data-toggle="modal" data-target="#User">'; echo $Dname;echo'</a>
+					<a class="linkcolor btn" href="#" data-toggle="modal" data-target="#User">'; echo $_SESSION['caadmin'];echo'</a>
 				</li>
 
 			';}

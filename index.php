@@ -52,9 +52,12 @@
 			$Fname=$row['FirstName'];
 			$Lname=$row['LastName'];
 			$Email=$row['Email'];
+			$role=$row['Role'];
 			$Filepath=$row['FileFolder'];
 			$_SESSION['username'] = $Dname;
 			$_SESSION['userId'] = $row['UserId'];
+			$_SESSION['role'] = $row['Role'];
+			
 
 			echo "
 
@@ -70,43 +73,6 @@
 
 			echo "<div id='recentPost'>";
 			recentPost();
-			echo $_SERVER['DOCUMENT_ROOT'];
-			echo "</div>";
-
-			echo "<div id='PostForm' style='display:none;'>";
-			PostForm();
-			echo "</div>";
-
-			echo "<div id='PostProblem' style='display:none;'>";
-			PostProblem();
-			echo "</div>";
-
-			echo "<div id='RecentProblem' style='display:none;'>";
-			recentProblem();
-			echo "</div>";
-
-			echo "<div id='postbyC' style='display:none;'>";
-			postbyCat("c");
-			echo "</div>";
-
-			echo "<div id='postbyCpp' style='display:none;'>";
-			postbyCat('cpp');
-			echo "</div>";
-
-			echo "<div id='postbyJava' style='display:none;'>";
-			postbyCat('java');
-			echo "</div>";
-
-			echo "<div id='postbyPy' style='display:none;'>";
-			postbyCat('py');
-			echo "</div>";
-
-			echo "<div id='postbyPhp' style='display:none;'>";
-			postbyCat('php');
-			echo "</div>";
-
-			echo "<div id='postbyAsm' style='display:none;'>";
-			postbyCat('asm');
 			echo "</div>";
 
 			echo "</div>";
@@ -157,9 +123,11 @@ elseif (isset($_SESSION['caemail']) ) {
 			$Fname=$row['FirstName'];
 			$Lname=$row['LastName'];
 			$Email=$row['Email'];
+			$role=$row['Role'];
 			$Filepath=$row['FileFolder'];
 			$_SESSION['username'] = $Dname;
 			$_SESSION['userId'] = $row['UserId'];
+			$_SESSION['role'] = $row['Role'];
 
 			echo "
 

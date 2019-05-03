@@ -67,11 +67,11 @@ include($_SESSION['cadirectory'] . "/apps/load_var.php");
 			</div>
 			<div class="radio">
 				 <label class="radio-inline">
-      <input type="radio" name="optradio" onclick="document.getElementById('Uploadp').style.display='block';document.getElementById('Code_herep').style.display='none';document.getElementById('Uploadp').required = true; document.getElementById('Code_herep').required = false; document.getElementById('postbtn').name = 'postpfile'; return chkit();" required="required">Upload file
+      <input type="radio" name="optradio" onclick="document.getElementById('Uploadp').style.display='block';document.getElementById('Code_herep').style.display='none';document.getElementById('Uploadp').required = true; document.getElementById('Code_herep').required = false; document.getElementById('postbtn').name = 'postpfile'; return chkit();" >Upload file
     </label>
     Or
     <label class="radio-inline">
-      <input type="radio" name="optradio" onclick="document.getElementById('Code_herep').style.display='block';document.getElementById('Uploadp').style.display='none'; document.getElementById('Code_herep').required = true; document.getElementById('Uploadp').required = false; document.getElementById('postbtn').name = 'postptxt';" required="required">Write here
+      <input type="radio" name="optradio" onclick="document.getElementById('Code_herep').style.display='block';document.getElementById('Uploadp').style.display='none'; document.getElementById('Code_herep').required = true; document.getElementById('Uploadp').required = false; document.getElementById('postbtn').name = 'postptxt';" >Write here
     </label>
 
 			</div>

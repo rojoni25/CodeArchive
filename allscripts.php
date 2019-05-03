@@ -1,5 +1,3 @@
-
-
 <?php
 $con = mysqli_connect("localhost","root","");
 $dbSelect = mysqli_select_db($con, "codearchivebetadb");
@@ -11,30 +9,31 @@ function recentPost()
 	global $con;
 	global $dbSelect;
 	$postcounter = 0;
-	$sql = "SELECT * FROM `poststbl` ORDER BY PostDate DESC";
+	$sql = "SELECT * FROM `poststbl` ORDER BY DBPostDate DESC";
 	$result = mysqli_query($con, $sql);
 
 	while ($row = mysqli_fetch_array($result)) {
 		$sqluser = "SELECT * FROM `users` where UserId= ".$row['UserId'];
 		$resultuser = mysqli_query($con, $sqluser);
 		$rowuser = mysqli_fetch_assoc($resultuser);
-		$count = count(explode("\n", $row['Code']));
+		$count = count(explode("\n", $row['Code'])); 			if($count>15){ 				$count=15; 			}
 
-		
 		echo "
+		
 
-		<div class='col-sm-9' style='margin-bottom:60px;'>
+		<div class='col-sm-9 shadow-lg' style='margin-bottom:60px; padding:20px; background-color:#e1e6ef;'>
 		<div class='row'>
-		<div class='col-sm-0 text-center'>
-		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
+		<div class='col-sm-0 text-center' >
+		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='rounded-circle' height='40' width='40' alt='Avatar'>
 		</div>
 		<div class='col-sm-0 text-center'>
 		<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
 		</div>
+		<div class='col-sm-6 text-vertical-center'><h5><small><span class='badge badge-pill badge-info'>" . $rowuser['Role'] . "</small></h5></span></div>
 		</div>
 		<a href='http://localhost/codearchive/posts/?postid=".$row['PostId']."'><h5> " . $row['Title'] . " </h5></a>
 		<h6><span class='glyphicon glyphicon-time'></span> " . $row['PostDate'] . ".</h6>
-		<h5><span class='badge badge-pill badge-success'>" . $row['Language'] . "</span></h5><br>
+		<h5><span class='badge badge-pill badge-success' style='margin-right:5px;'>" . $row['Language'] . "</span><span class='badge badge-pill badge-primary'>Post</span></h5><br>
 		<p>" . $row['ShortDescription'] . "</p>
 		<textarea class='form-control' name='post".$postcounter++."' rows='".$count."' disabled>" . $row['Code'] . "</textarea>
 		<br><br>
@@ -317,6 +316,7 @@ function postit()
 
 
 		$User = $Dname;
+		$PostId = rand();
 		$CodeName = $_POST['code_name'];
 		$DescriptiveName = $_POST['descriptive_name'];
 		$DetailedDescription = $_POST['detailed_description'];
@@ -346,15 +346,15 @@ function postit()
 			echo "DB is selected.<br>";
 		}
 
-		$stmt = $con->prepare("INSERT INTO PostTbl (User,CodeName,DescriptiveName,Description,Language,Code,File,Date) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
-		$stmt->bind_param("ssssssss", $User, $CodeName, $DescriptiveName, $DetailedDescription, $PrefLang, $CodeHere, $Filename, $date);
+		$stmt = $con->prepare("INSERT INTO Poststbl(PostId,UserId,Title,ShortDescription,Description,Language,File,Code,PostDate) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)");
+					$stmt->bind_param("sssssssss", $PostId, $UserId, $CodeName, $DescriptiveName, $DetailedDescription, $PrefLang, $Filename, $CodeHere, $date);
 		if (!$stmt->execute()) {
 			echo "Invalid sign up.<br>";
 		} else {
 			{
 				echo "Table is Created.<br>";
 				echo "Thank you for sign up.<br>";
-				header("location:Home.php");
+				header("location:http://localhost/codearchive/");
 			}
 
 		}
@@ -378,10 +378,10 @@ function recentProblem()
 		$rowuser = mysqli_fetch_assoc($resultuser);
 		$count = count(explode("\n", $row['AttachmentCode']));
 
-		echo "<div class='col-sm-9' style='margin-bottom:60px'>
+		echo "<div class='col-sm-9 shadow-lg' style='margin-bottom:60px; padding:20px; background-color:#e1e6ef;'>
 		<div class='row'>
 		<div class='col-sm-0 text-center'>
-		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
+		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='rounded-circle' height='40' width='40' alt='Avatar'>
 		</div>
 		<div class='col-sm-0 text-center'>
 		<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
@@ -389,7 +389,7 @@ function recentProblem()
 		</div>
 		<h5><a href='http://localhost/codearchive/problems/?problemid=".$row['ProblemId']."'> " . $row['Title'] . "</a> </h5>
 		<h6><span class='glyphicon glyphicon-time'></span>Problem Id: " . $row['ProblemId'] . ", Date: " . $row['ProblemDate'] . ".</h6>
-		<h5><span class='badge badge-pill badge-success'>" . $row['Language'] . "</span></h5><br>
+		<h5><span class='badge badge-pill badge-success' style='margin-right:5px;'>" . $row['Language'] . "</span><span class='badge badge-pill badge-danger'>Question</span></h5><br>
 		<textarea class='form-control' rows='flexible' disabled>" . $row['Description'] . "</textarea>
 		
 		<br><br>
@@ -447,7 +447,7 @@ function postbyCat($cats)
 
 	global $con;
 	global $dbSelect;
-	$sql = "SELECT * FROM `posttbl` WHERE Language = '$cats' ORDER BY Sl DESC";
+	$sql = "SELECT * FROM `poststbl` WHERE Language = '$cats' ORDER BY Sl DESC";
 	$result = mysqli_query($con, $sql);
 
 	if (!mysqli_fetch_assoc($result)) {
@@ -458,58 +458,36 @@ function postbyCat($cats)
 
 		while ($row = mysqli_fetch_array($result)) {
 
-			echo "<div class='col-sm-9' style='margin-bottom:60px'>
-			<h4><small>RECENT POSTS</small></h4>
-			<hr>
-			<h2> " . $row['CodeName'] . " </h2>
-			<h5><span class='glyphicon glyphicon-time'></span> Post by " . $row['User'] . ", " . $row['Date'] . ".</h5>
-			<h5><span class='badge badge-pill badge-success'>" . $row['language'] . "</span></h5><br>
-			<p>" . $row['DescriptiveName'] . "</p>
-			<textarea class='form-control' rows='20' disabled>" . $row['Code'] . "</textarea>
-			<br><br>
+			$sqluser = "SELECT * FROM `users` where UserId= ".$row['UserId'];
+		$resultuser = mysqli_query($con, $sqluser);
+		$rowuser = mysqli_fetch_assoc($resultuser);
+		$count = count(explode("\n", $row['Code'])); 			if($count>15){ 				$count=15; 			}
 
-			<h4>Leave a Comment:</h4>
-			<form role='form'>
-			<div class='form-group'>
-			<textarea class='form-control' rows='3' required></textarea>
-			</div>
-			<button type='submit' class='btn btn-success'>Submit</button>
-			</form>
-			<br><br>
+		
+		echo "
 
-			<p><span class='badge'>2</span> Comments:</p><br>
+		<div class='col-sm-9 shadow-lg' style='margin-bottom:60px; padding:20px; background-color:#e1e6ef;'>
+		<div class='row'>
+		<div class='col-sm-0 text-center' >
+		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='rounded-circle' height='40' width='40' alt='Avatar'>
+		</div>
+		<div class='col-sm-0 text-center'>
+		<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
+		</div>
+		<div class='col-sm-6 text-vertical-center'><h5><small><span class='badge badge-pill badge-info'>" . $rowuser['Role'] . "</small></h5></span></div>
+		</div>
+		<a href='http://localhost/codearchive/posts/?postid=".$row['PostId']."'><h5> " . $row['Title'] . " </h5></a>
+		<h6><span class='glyphicon glyphicon-time'></span> " . $row['PostDate'] . ".</h6>
+		<h5><span class='badge badge-pill badge-success' style='margin-right:5px;'>" . $row['Language'] . "</span><span class='badge badge-pill badge-primary'>Post</span></h5><br>
+		<p>" . $row['ShortDescription'] . "</p>
+		<textarea class='form-control' name='post' rows='".$count."' disabled>" . $row['Code'] . "</textarea>
+		<br><br>
+		<p><span class='badge'>"; countComment($row['PostId']); echo"</span> Comments:</p><br>";
+		viewComment($row['PostId']);
 
-			<div class='row'>
-			<div class='col-sm-2 text-center'>
-			<img src='faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
-			</div>
-			<div class='col-sm-10'>
-			<h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
-			<p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			<br>
-			</div>
-			<div class='col-sm-2 text-center'>
-			<img src='bird.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
-			</div>
-			<div class='col-sm-10'>
-			<h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-			<p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			<br>
-			<p><span class='badge'>1</span> Comment:</p><br>
-			<div class='row'>
-			<div class='col-sm-2 text-center'>
-			<img src='bird.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
-			</div>
-			<div class='col-xs-10'>
-			<h4>Nested Bro <small>Sep 25, 2015, 8:28 PM</small></h4>
-			<p>Me too! WOW!</p>
-			<br>
-			</div>
-			</div>
-			</div>
-			</div>
-			</div>
-			";
+		echo "
+		</div>
+		";
 
 
 
@@ -518,9 +496,9 @@ function postbyCat($cats)
 	}
 }
 
-function searchpost()
+function searchpost($searchqry)
 {
-	$searchqry = $_SESSION['casearch'];
+	//$searchqry = $_SESSION['casearch'];
 	global $con;
 	global $dbSelect;
 	$sql = "SELECT * FROM `poststbl` WHERE Title LIKE '%$searchqry%' ORDER BY Title asc";
@@ -537,31 +515,35 @@ function searchpost()
 			$resultuser = mysqli_query($con, $sqluser);
 			$rowuser = mysqli_fetch_assoc($resultuser);
 			$count = count(explode("\n", $row['Code']));
+			if($count>15){
+				$count=15;
+			}
 	
 			
 			echo "
 	
-			<div class='col-sm-9' style='margin-bottom:60px;'>
-			<div class='row'>
-			<div class='col-sm-0 text-center'>
-			<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
-			</div>
-			<div class='col-sm-0 text-center'>
-			<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
-			</div>
-			</div>
-			<a href='http://localhost/codearchive/posts/?postid=".$row['PostId']."'><h2> " . $row['Title'] . " </h2></a>
-			<h5><span class='glyphicon glyphicon-time'></span> " . $row['PostDate'] . ".</h5>
-			<h5><span class='badge badge-pill badge-success'>" . $row['Language'] . "</span></h5><br>
-			<p>" . $row['ShortDescription'] . "</p>
-			<textarea class='form-control' name='post' rows='".$count."' disabled>" . $row['Code'] . "</textarea>
-			<br><br>
-			<p><span class='badge'>"; countComment($row['PostId']); echo"</span> Comments:</p><br>";
-			viewComment($row['PostId']);
-	
-			echo "
-			</div>
-			";
+			<div class='col-sm-9 shadow-lg' style='margin-bottom:60px; padding:20px; background-color:#e1e6ef;'>
+		<div class='row'>
+		<div class='col-sm-0 text-center' >
+		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='rounded-circle' height='40' width='40' alt='Avatar'>
+		</div>
+		<div class='col-sm-0 text-center'>
+		<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
+		</div>
+		<div class='col-sm-6 text-vertical-center'><h5><small><span class='badge badge-pill badge-info'>" . $rowuser['Role'] . "</small></h5></span></div>
+		</div>
+		<a href='http://localhost/codearchive/posts/?postid=".$row['PostId']."'><h5> " . $row['Title'] . " </h5></a>
+		<h6><span class='glyphicon glyphicon-time'></span> " . $row['PostDate'] . ".</h6>
+		<h5><span class='badge badge-pill badge-success'>" . $row['Language'] . "</span></h5><br>
+		<p>" . $row['ShortDescription'] . "</p>
+		<textarea class='form-control' name='post' rows='".$count."' disabled>" . $row['Code'] . "</textarea>
+		<br><br>
+		<p><span class='badge'>"; countComment($row['PostId']); echo"</span> Comments:</p><br>";
+		viewComment($row['PostId']);
+
+		echo "
+		</div>
+		";
 
 
 

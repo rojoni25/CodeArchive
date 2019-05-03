@@ -52,10 +52,10 @@ echo $JoinDate;
 			$_SESSION['caemail']=$E_mail;
 			$_SESSION['capassword']=$Password;
 
-			//if(!mkdir($Filepath))
+			mkdir($Filepath);
 			//{header("location:../codearchive");}
 
-			header("location:../codearchive");
+			header("location:http://localhost/codearchive/");
 
 
 

@@ -8,7 +8,7 @@
 		$Password=sha1($_POST['password']);
 		$con = mysqli_connect("localhost","root","");
 		$dbSelect = mysqli_select_db($con,"codearchivebetadb");
-		$sql="select Email,Password from admintbl where Email='$E_mail' and Password='$Password'";
+		$sql="select AdminEmail,AdminPassword,AdminId from admintbl where AdminEmail='$E_mail' and AdminPassword='$Password'";
 		$result = mysqli_query($con,$sql);
 		if(!$var = mysqli_fetch_array($result))
 		{
@@ -18,7 +18,8 @@
 		{
 
            	if (isset($_SESSION['id']))
-           		$_SESSION['id'] = $_SESSION['id'];
+                   $_SESSION['id'] = $_SESSION['id'];
+                   $_SESSION['caadmin']= $var['AdminEmail'];
            	header('location:http://localhost/codearchive/admin');
 
            }

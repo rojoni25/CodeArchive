@@ -73,6 +73,7 @@
 <?php 
 session_start();
 include($_SESSION['cadirectory']."/allscripts.php");
+include($_SESSION['cadirectory']."/apps/load_var.php");
 
 $con = mysqli_connect("localhost", "root", "");
 $dbSelect = mysqli_select_db($con, "codearchivebetadb");
@@ -81,88 +82,46 @@ $dbSelect = mysqli_select_db($con, "codearchivebetadb");
 
 
 
-if (isset($_GET['postid'])) {
-	$_SESSION['postid'] = $_GET['postid'];
-	if (isset($_POST['login']) || isset($_SESSION['caemail'])) {
-		if (isset($_POST['login'])) {
-
-			$E_mail = $_POST['email'];
-			$Password = sha1($_POST['password']);
-		} elseif (isset($_SESSION['caemail'])) {
-
-
-			$E_mail = $_SESSION['caemail'];
-			$Password = $_SESSION['capassword'];
-		}
-
-		$sql = "select Email,Password from Users where Email='$E_mail' and Password='$Password'";
-		$result = mysqli_query($con, $sql);
-		if (!$var = mysqli_fetch_array($result)) {
-			echo "No user found";
-		} else {
-			if (isset($_SESSION['id']))
-				$_SESSION['id'] = $_SESSION['id'];
-			$_SESSION['caemail'] = $E_mail;
-
-			$_SESSION['capassword'] = $Password;
-			setcookie("caEmail", $E_mail, time() + (86400 * 30), "/"); //86400 is 1 day
-			setcookie("caPassword", $Password, time() + (86400 * 30), "/"); //86400 is 1 day
-			$sql2 = "select * from Users where Email='$E_mail' and Password='$Password'";
-			$result2 = mysqli_query($con, $sql2);
-			$row = mysqli_fetch_assoc($result2);
-			$Dname = $row['UserName'];
-			$Fname = $row['FirstName'];
-			$Lname = $row['LastName'];
-			$Email = $row['Email'];
-			$Filepath = $row['FileFolder'];
-			$_SESSION['username'] = $Dname;
-			$_SESSION['userId'] = $row['UserId'];
-		}
-
 		echo "<div class='row'>";
 		echo "<div class='col-sm-2'>";
 		//include($_SERVER['DOCUMENT_ROOT']."/Codearchive/leftsidebar.php");
 		echo "</div>";
 		echo "
-
-
 			<div class='fixed-top'>";
 		include($_SESSION['cadirectory']."/Views/Shared/HomeNavigation.php");
 		echo "</div>";
 		echo "<div class='col-sm-9' style='margin-top:60px;'>";
-
+		if (isset($_GET['postid'])) {
+			$_SESSION['postid'] = $_GET['postid'];
 		selectedPost($_GET['postid']);
+		}
+		else if (isset($_GET['newpost'])){
+			if(isset($_POST['login'])||isset($_SESSION['caemail'])){
+				include($_SESSION['cadirectory']."/apps/newpost.php");	 
+			}
+			else{
+				echo "<div class='col-sm-9'  style='margin:25%;'>
+				<h4>Please <a class = 'btn btn-success' href='#' data-toggle='modal' data-target='#Login'>Login</a> or <a class = 'btn btn-success' href='#' data-toggle='modal' data-target='#Register'>Register</a> to ask a question </h4>
+				</div>";
+			}
+		}
+
+		else{
+			recentPost();
+
+		}
+
 
 		echo "</div>";
 		echo "</div>";
-
 		include($_SESSION['cadirectory']."/footer.php");
-		include($_SESSION['cadirectory']."/UserModal.php");
-	} else {
-		include($_SESSION['cadirectory']."/FormModal.php");
-
-		echo "<div class='row'>";
-		echo "<div class='col-sm-2'>";
-		//include($_SERVER['DOCUMENT_ROOT']."/Codearchive/leftsidebar.php");
-		echo "</div>";
-		echo "
-
-
-			<div class='fixed-top'>";
-		include($_SESSION['cadirectory']."/Views/Shared/HomeNavigation.php");
-		echo "</div>";
-		echo "<div class='col-sm-9' style='margin-top:60px;'>";
-
-		selectedPost($_GET['postid']);
-
-		echo "</div>";
-		echo "</div>";
-
-		include($_SESSION['cadirectory']."/footer.php");
-	}
-}
-
-
+		if(isset($_POST['login'])||isset($_SESSION['caemail'])){
+			include($_SESSION['cadirectory']."/UserModal.php");	 
+		}
+		else{
+			include($_SESSION['cadirectory']."/FormModal.php");
+		}
+		
 
 function selectedPost($postid)
 {
@@ -182,26 +141,25 @@ function selectedPost($postid)
 
 		echo "
 
-		<div class='col-sm-9' style='margin-bottom:60px; '>
+		<div class='col-sm-9 shadow-lg' style='margin-bottom:60px; padding:20px; background-color:#e1e6ef;'>
 		<div class='row'>
-		<div class='col-sm-0 text-center'>
-		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='img-circle' height='40' width='40' alt='Avatar'>
+		<div class='col-sm-0 text-center' style='padding-right:5px;'>
+		<img src='http://localhost/codearchive/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg' class='rounded-circle' height='40' width='40' alt='Avatar'>
 		</div>
 		<div class='col-sm-0 text-center'>
-		<a href='http://localhost/codearchive/User/?userid=" . $row['PostId'] . "'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
+		<a href='http://localhost/codearchive/User/?userid=".$row['UserId']."'><h4><small>" . $rowuser['UserName'] . "</small></h4></a>
 		</div>
+		<div class='col-sm-6 text-vertical-center'><span class='badge badge-pill badge-info'>" . $rowuser['Role'] . "</span></div>
 		</div>
-		<a href='http://localhost/codearchive/posts/?postid=" . $row['PostId'] . "'><h5> " . $row['Title'] . " </h5></a>
+		<a href='http://localhost/codearchive/posts/?postid=".$row['PostId']."'><h5> " . $row['Title'] . " </h5></a>
 		<h6><span class='glyphicon glyphicon-time'></span> " . $row['PostDate'] . ".</h6>
 		<h5><span class='badge badge-pill badge-success'>" . $row['Language'] . "</span></h5><br>
 		<p>" . $row['ShortDescription'] . "</p>
-		<textarea class='form-control' name='post" . $postcounter++ . "' rows='$count' disabled>" . $row['Code'] . "</textarea>
+		<textarea class='form-control' name='post".$postcounter++."' rows='".$count."' disabled>" . $row['Code'] . "</textarea>
 		<br><br>
-		<div id='loadcomment'>
-		<p><span class='badge' id='countval'>";
-		countComment($row['PostId']);
-		echo "</span> Comments:</p><br>";
-		echo "</div>";
+		<p><span class='badge'>"; countComment($row['PostId']); echo"</span> Comments:</p><br>";
+		viewComment($row['PostId']);
+
 
 		echo "<h4 id='smit'>Leave a Comment:</h4>
 		<form role='form' id= 'commentform' method='post' onsubmit='return submitdata();' >
